@@ -1,0 +1,9 @@
+# Repository-level configuration for bilio-git/Bilio-website.
+# The uploaded website lives inside this directory, including its literal space.
+[build]
+  base = "Bilio-project 3"
+  command = "python3 build-deploy.py"
+  publish = "dist"
+
+[build.environment]
+  PYTHON_VERSION = "3.12"
