@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bilio — Wordmark in motion</title>
+  <style>
+    :root { color-scheme: light; font-family: Arial, Helvetica, sans-serif; background: #f7f7f5; color: #171918; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { max-width: 1440px; min-height: 100svh; margin: auto; padding: 32px 48px; display: flex; flex-direction: column; }
+    header, footer, .controls, .speed { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+    header { justify-content: space-between; font-size: 14px; }
+    h1 { margin: 0; font-size: 16px; font-weight: 500; }
+    .secondary { color: #626862; }
+    .stage { flex: 1; display: grid; place-items: center; min-height: 360px; padding: 30px 0; }
+    .stage svg { display: block; width: min(100%, 950px); overflow: visible; }
+    footer { justify-content: space-between; border-top: 1px solid #d9ddda; padding-top: 22px; font-size: 14px; }
+    button { font: inherit; color: inherit; background: transparent; border: 1px solid #aeb5af; border-radius: 5px; padding: 11px 18px; min-height: 44px; cursor: pointer; }
+    button:hover { background: #e8ece8; }
+    button:focus-visible, input:focus-visible { outline: 2px solid #396653; outline-offset: 4px; }
+    input { accent-color: #171918; }
+    input[type="range"] { width: 110px; }
+    .soft-toggle { display: flex; align-items: center; gap: 8px; min-height: 44px; }
+    output { min-width: 3.5ch; font-variant-numeric: tabular-nums; }
+    .speed { gap: 10px; }
+    #motion-note { margin: 0; }
+    @media (max-width: 600px) {
+      main { padding: 24px; }
+      .stage { min-height: 300px; }
+      footer { align-items: flex-start; gap: 20px; }
+      .controls { gap: 16px; }
+      header { gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header><h1>Bilio / Wordmark in motion</h1></header>
+  <div class="stage"><!-- WORDMARK --></div>
+  <footer>
+    <div class="controls">
+      <button id="toggle" type="button">Pause animation</button>
+      <label class="speed" for="speed">Speed <input id="speed" type="range" min="0.5" max="2" step="0.25" value="1"><output id="rate" for="speed">1×</output></label>
+      <label class="soft-toggle"><input id="soft" type="checkbox" checked>Soft lettering</label>
+    </div>
+    <p class="secondary" id="motion-note">Continuous gravity simulation</p>
+  </footer>
+</main>
+<!-- PHYSICS -->
+<script>
+  const stage = document.querySelector('.stage');
+  const toggle = document.getElementById('toggle');
+  const speed = document.getElementById('speed');
+  const rate = document.getElementById('rate');
+  const note = document.getElementById('motion-note');
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  let paused = false;
+  const physics = BilioPhysics.mount(stage.querySelector('svg'));
+  document.getElementById('soft').addEventListener('change', event => physics.setSoft(event.target.checked));
+  function updateMotion() {
+    toggle.disabled = reducedMotion.matches;
+    speed.disabled = reducedMotion.matches;
+    toggle.textContent = reducedMotion.matches ? 'Motion reduced' : paused ? 'Play animation' : 'Pause animation';
+    note.textContent = reducedMotion.matches ? 'Respects your reduced-motion preference' : 'Continuous gravity simulation';
+    physics.setSpeed(Number(speed.value));
+    physics.setPaused(paused || document.hidden);
+  }
+  toggle.addEventListener('click', () => { paused = !paused; updateMotion(); });
+  speed.addEventListener('input', () => { rate.value = `${speed.value}×`; updateMotion(); });
+  reducedMotion.addEventListener('change', updateMotion);
+  document.addEventListener('visibilitychange', updateMotion);
+  updateMotion();
+</script>
+</body>
+</html>

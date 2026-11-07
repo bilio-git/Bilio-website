@@ -1,0 +1,3 @@
+# Preserve links to the previous Bilio website. Netlify normalizes trailing slashes.
+/deploy  /  301!
+/enjoy   /  301!

@@ -1,0 +1,7 @@
+# Build the supplied static website directly from its editable source.
+[build]
+  command = "python3 build-deploy.py"
+  publish = "dist"
+
+[build.environment]
+  PYTHON_VERSION = "3.12"

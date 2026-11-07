@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bilio — A little blink</title>
+<style>
+  :root { font-family: Arial, Helvetica, sans-serif; color: #242923; background: #f5f4ed; }
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  main { max-width: 1400px; min-height: 100svh; padding: 32px 48px; margin: auto; display: flex; flex-direction: column; }
+  header, footer, .controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  h1 { font-size: 16px; font-weight: 500; margin: 0; }
+  .quiet { font-size: 13px; color: #71756b; }
+  .stage { flex: 1; min-height: 420px; display: grid; place-items: center; padding: 60px 20px; }
+  .stage > svg { width: min(100%, 560px); height: auto; overflow: visible; }
+  footer { border-top: 1px solid #d6d8cd; padding-top: 22px; font-size: 14px; }
+  .controls { justify-content: flex-start; }
+  button, .download { color: inherit; font: inherit; border: 1px solid #b7bdae; padding: 11px 17px; border-radius: 6px; background: transparent; text-decoration: none; cursor: pointer; min-height: 44px; }
+  button:hover, .download:hover { background: #e8ebdf; }
+  button:focus-visible, a:focus-visible { outline: 2px solid #426b42; outline-offset: 4px; }
+  .reference { display: flex; gap: 16px; align-items: center; }
+  .reference img { width: 72px; height: auto; }
+  @media (max-width: 600px) { main { padding: 24px; } .stage { min-height: 350px; padding: 40px 0; } footer { gap: 24px; } }
+</style>
+<main>
+  <header><h1>Bilio / A little blink</h1><span class="quiet">Sugar glider</span></header>
+  <div class="stage"><svg xmlns="http://www.w3.org/2000/svg" width="326.47" height="242.64" viewBox="0 0 244.85 181.98" role="img" aria-labelledby="glider-title glider-desc">
+  <title id="glider-title">Deployer, the Bilio mascot</title>
+  <desc id="glider-desc">A single continuous sugar glider silhouette with transparent eyes that blink softly.</desc>
+  <style>
+    .blink { animation: bilio-blink 9s linear infinite; transform-box: view-box; }
+    .left { transform-origin: 109.93px 40.82px; }
+    .right { transform-origin: 134.86px 40.82px; }
+    @keyframes bilio-blink {
+      0%, 29%, 32%, 74%, 77%, 79%, 82%, 100% { transform: scaleY(1); }
+      30%, 30.5%, 75%, 75.5%, 80%, 80.5% { transform: scaleY(.065); }
+    }
+    svg[data-paused="true"] .blink { animation-play-state: paused; }
+    @media (prefers-reduced-motion: reduce) { .blink { animation: none; } }
+  </style>
+  <defs>
+    <!-- Exact Bezier outline of the first i-dot, uniformly scaled for each eye. -->
+    <path id="bilio-eye-dot" d="M724.21,255.6c0,30.15-25.03,54.58-55.91,54.58s-55.91-24.43-55.91-54.58,25.03-54.58,55.91-54.58,55.91,24.43,55.91,54.58h0ZM724.21,255.6"/>
+    <mask id="glider-eye-openings" x="0" y="0" width="244.85" height="181.98" maskUnits="userSpaceOnUse" style="mask-type: luminance">
+      <rect width="244.85" height="181.98" fill="white"/>
+      <g fill="black"><g class="blink left"><g transform="translate(109.93 40.82) scale(0.1559649437) translate(-668.3 -255.6)"><use href="#bilio-eye-dot"/></g></g><g class="blink right"><g transform="translate(134.86 40.82) scale(0.1559649437) translate(-668.3 -255.6)"><use href="#bilio-eye-dot"/></g></g></g>
+      <g fill="white"><g class="blink left"><g transform="translate(111.18 40.53) scale(0.1053478805) translate(-668.3 -255.6)"><use href="#bilio-eye-dot"/></g></g><g class="blink right"><g transform="translate(133.67 40.53) scale(0.1053478805) translate(-668.3 -255.6)"><use href="#bilio-eye-dot"/></g></g></g>
+    </mask>
+  </defs>
+  <path fill="#000000" d="M243.72,5.31s-2.14.74-2.61.51c0,0,.59-1.84.68-2.91-1.07.09-2.92.66-2.92.66-.23-.47.52-2.61.52-2.61-.3-.23-1.39-1.01-2.97-.96-1.65.05-2.72.95-3,1.2t-.01,0s-37.34,27.64-80.52,38.04c.02-.32.04-.64.04-.97,0-3.99-1.92-7.7-5.19-10.78,7.66-11.12,2.28-21.22,2.28-18.48,0,1.99-6.24,4.63-12.79,12.35-4.41-1.56-9.49-2.45-14.9-2.45-5.41,0-10.49.9-14.9,2.46-6.55-7.72-12.8-10.36-12.8-12.34,0-2.75-5.36,7.36,2.3,18.47-3.28,3.08-5.18,6.79-5.18,10.79,0,.33.01.65.03.97C48.6,28.87,11.25,1.25,11.25,1.25c0,0,0,0-.01,0-.36-.27-1.4-1-2.93-1.06-1.55-.07-2.66.58-3.04.83,0,0,.75,2.14.52,2.61,0,0-1.84-.57-2.92-.66.1,1.07.69,2.91.69,2.91-.46.23-2.61-.51-2.61-.51C.65,5.77.03,6.75,0,8.12c-.03,1.62.79,2.93,1.49,3.63,0,0,0,0,.01.01.68.68,25.28,25.2,31.7,52.6C43.65 104.84 13.51 125.59 13.51 125.59 C8.45 131.44 14.47 137.85 14.47 137.85 C14.47 137.85 16.45 133.97 20.97 132.77 C20.97 132.77 71.65 118.01 115.09 118 C115.09 118 95.10 135.81 108.37 152.41 C116.20 162.21 120.96 177.92 113.41 181.98 C113.41 181.98 157.09 165.92 137.44 138.14 C129.21 126.50 128.02 123.93 129.73 118 C164.27 117.85 223.87 132.73 223.87 132.73 C228.64 133.82 230.37 137.80 230.37 137.80 C230.37 137.80 236.39 131.38 231.32 125.53 L231.33 125.54 C231.33 125.54 201.36 104.81 211.47 64.32c6.34-27.09,30.43-51.38,31.64-52.58,0,0,.02-.02.05-.05.37-.37.65-.72.86-.99.24-.32.79-1.18.82-2.39.04-1.65-.91-2.75-1.13-3Z" mask="url(#glider-eye-openings)"/>
+</svg></div>
+  <footer>
+    <div class="controls">
+      <button id="pause" type="button">Pause</button>
+      <button id="blink" type="button">Blink now</button>
+      <a class="download" href="assets/bilio_deployer.blink.svg" download>Download SVG</a>
+    </div>
+    <div class="reference"><img src="assets/Bilio_Wordmark.original.svg" alt="Bilio"><span class="quiet">Same curves. A little more life.</span></div>
+  </footer>
+</main>
+<script>
+  const svg = document.querySelector('.stage svg');
+  const pause = document.querySelector('#pause');
+  const blink = document.querySelector('#blink');
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  let paused = false;
+  function sync() {
+    svg.dataset.paused = String(paused || document.hidden);
+    pause.textContent = motion.matches ? 'Motion reduced' : paused ? 'Play' : 'Pause';
+    pause.disabled = motion.matches;
+    blink.disabled = motion.matches;
+  }
+  pause.addEventListener('click', () => { paused = !paused; sync(); });
+  blink.addEventListener('click', () => {
+    paused = false; sync();
+    svg.getAnimations({subtree: true}).forEach(animation => { animation.currentTime = 2610; });
+  });
+  motion.addEventListener('change', sync);
+  document.addEventListener('visibilitychange', sync);
+  sync();
+</script>
+</html>

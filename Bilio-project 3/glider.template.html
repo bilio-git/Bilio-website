@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bilio — A little blink</title>
+<style>
+  :root { font-family: Arial, Helvetica, sans-serif; color: #242923; background: #f5f4ed; }
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  main { max-width: 1400px; min-height: 100svh; padding: 32px 48px; margin: auto; display: flex; flex-direction: column; }
+  header, footer, .controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  h1 { font-size: 16px; font-weight: 500; margin: 0; }
+  .quiet { font-size: 13px; color: #71756b; }
+  .stage { flex: 1; min-height: 420px; display: grid; place-items: center; padding: 60px 20px; }
+  .stage > svg { width: min(100%, 560px); height: auto; overflow: visible; }
+  footer { border-top: 1px solid #d6d8cd; padding-top: 22px; font-size: 14px; }
+  .controls { justify-content: flex-start; }
+  button, .download { color: inherit; font: inherit; border: 1px solid #b7bdae; padding: 11px 17px; border-radius: 6px; background: transparent; text-decoration: none; cursor: pointer; min-height: 44px; }
+  button:hover, .download:hover { background: #e8ebdf; }
+  button:focus-visible, a:focus-visible { outline: 2px solid #426b42; outline-offset: 4px; }
+  .reference { display: flex; gap: 16px; align-items: center; }
+  .reference img { width: 72px; height: auto; }
+  @media (max-width: 600px) { main { padding: 24px; } .stage { min-height: 350px; padding: 40px 0; } footer { gap: 24px; } }
+</style>
+<main>
+  <header><h1>Bilio / A little blink</h1><span class="quiet">Sugar glider</span></header>
+  <div class="stage"><!-- GLIDER --></div>
+  <footer>
+    <div class="controls">
+      <button id="pause" type="button">Pause</button>
+      <button id="blink" type="button">Blink now</button>
+      <a class="download" href="assets/bilio_deployer.blink.svg" download>Download SVG</a>
+    </div>
+    <div class="reference"><img src="assets/Bilio_Wordmark.original.svg" alt="Bilio"><span class="quiet">Same curves. A little more life.</span></div>
+  </footer>
+</main>
+<script>
+  const svg = document.querySelector('.stage svg');
+  const pause = document.querySelector('#pause');
+  const blink = document.querySelector('#blink');
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  let paused = false;
+  function sync() {
+    svg.dataset.paused = String(paused || document.hidden);
+    pause.textContent = motion.matches ? 'Motion reduced' : paused ? 'Play' : 'Pause';
+    pause.disabled = motion.matches;
+    blink.disabled = motion.matches;
+  }
+  pause.addEventListener('click', () => { paused = !paused; sync(); });
+  blink.addEventListener('click', () => {
+    paused = false; sync();
+    svg.getAnimations({subtree: true}).forEach(animation => { animation.currentTime = 2610; });
+  });
+  motion.addEventListener('change', sync);
+  document.addEventListener('visibilitychange', sync);
+  sync();
+</script>
+</html>
